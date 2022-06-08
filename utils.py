@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 import io
 import psycopg2
-
+import pandas as pd
 def insert_dataframe(df):
     engine = create_engine('postgresql+psycopg2://postgres:ident@localhost:5432/RYM')
 
@@ -15,6 +15,16 @@ def insert_dataframe(df):
     contents = output.getvalue()
     cur.copy_from(output, 'album_info', null="") # null values become ''
     conn.commit()
+    conn.close()
+    cur.close()
+
+
+def get_records():
+    conn = psycopg2.connect(database="RYM",user="postgres", password="ident", host="localhost",port=5432)
+    query = "select * from album_info"
+    data_df = pd.read_sql_query(query,conn)
+    conn.close()
+    return data_df
 
 def create_table():
     conn = psycopg2.connect(database="RYM",user="postgres", password="ident", host="localhost",port=5432)
