@@ -5,18 +5,21 @@ import pandas as pd
 def insert_dataframe(df):
     engine = create_engine('postgresql+psycopg2://postgres:ident@localhost:5432/RYM')
 
-    df.head(0).to_sql('album_info', engine, if_exists='replace',index=False) #drops old table and creates new empty table
 
-    conn = engine.raw_connection()
-    cur = conn.cursor()
-    output = io.StringIO()
-    df.to_csv(output, sep='\t', header=False, index=False)
-    output.seek(0)
-    contents = output.getvalue()
-    cur.copy_from(output, 'album_info', null="") # null values become ''
-    conn.commit()
-    conn.close()
-    cur.close()
+    if len(df) > 0:
+        conn = engine.raw_connection()
+
+        df_columns = list(df)
+        columns = ",".join(df_columns)
+
+        values = "VALUES({})".format(",".join(["%s" for _ in df_columns])) 
+
+        insert_stmt = "INSERT INTO {} ({}) {}".format('album_info',columns,values)
+
+        cur = conn.cursor()
+        psycopg2.extras.execute_batch(cur, insert_stmt, df.values)
+        conn.commit()
+        cur.close()
 
 
 def get_records():

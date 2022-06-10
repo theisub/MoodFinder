@@ -60,8 +60,8 @@ for item in album_files:
 
 album_info_df = pd.DataFrame([x.__dict__ for x in album_info_list])
 print(album_info_df.head())
-# create_table()
+create_table()
     
 
-# insert_dataframe(album_info_df)
+insert_dataframe(album_info_df)
 # def add_info():

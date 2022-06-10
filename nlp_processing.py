@@ -20,7 +20,7 @@ def mean_pooling(model_output, attention_mask):
 data_df = get_records()
 
 print(data_df.head())
-sentences = [re.sub('[^a-zA-Z0-9 \n\.]','',x) for x in data_df['album_mood'].values]
+sentences = [re.sub('[^a-zA-Z0-9 \n\.]',' ',x) for x in data_df['album_mood'].values]
 sentences.insert(0,"I've been hiding from this ever since my breakup with girlfriend number two...the last girlfriend I had and the only one of the two who I really had any romanticism with. We kissed, we caressed, we did all the things that kids our age should be doing. We never had sex, and I didn't want sex. I didn't want anything to do with that; I just wanted her. We had a barren, long-distance relationship that climaxed in two nights that I call the best nights of my life, and then crumbled through the electronic message on a familiar teenage friends and dating site. I've never been the same since then, and it's only been for the worst. As I became worse and worse, I was oblivious to my surroundings. I believed in imaginary beings. I believed that I'd never be okay again. I let the small things get in the way of my life. It went on that way for months. I don't think it would've ever ended if I hadn't shaken myself out of it. I still don't know how I mustered up the strength all on my own, but I did. I did it and I did it all by myself.")
 # sentences =  np.insert(sentences,0,"I am walking through dark forest with thick vegetation,I messed up and end up in deep gooey swamp."
 
