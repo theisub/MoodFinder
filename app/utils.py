@@ -2,8 +2,10 @@ from sqlalchemy import create_engine
 import io
 import psycopg2
 import pandas as pd
+import os
+
 def insert_dataframe(df):
-    engine = create_engine('postgresql+psycopg2://postgres:ident@db:5432/RYM')
+    engine = create_engine(f'postgresql+psycopg2://postgres:ident@{os.environ.get("DB_HOST")}:5432/RYM')
 
 
     if len(df) > 0:
@@ -22,16 +24,17 @@ def insert_dataframe(df):
         cur.close()
     print("Data is added!")
 
-
 def get_records():
-    conn = psycopg2.connect(database="RYM",user="postgres", password="ident", host="db",port=5432)
+    engine = create_engine(f'postgresql+psycopg2://postgres:ident@{os.environ.get("DB_HOST")}:5432/RYM')
+    conn = engine.raw_connection()
     query = "select * from album_info"
     data_df = pd.read_sql_query(query,conn)
     conn.close()
     return data_df
 
 def create_table():
-    conn = psycopg2.connect(database="RYM",user="postgres", password="ident", host="db",port=5432)
+    engine = create_engine(f'postgresql+psycopg2://postgres:ident@{os.environ.get("DB_HOST")}:5432/RYM')
+    conn = engine.raw_connection()
     query = """ CREATE TABLE album_info (
             album_id SERIAL PRIMARY KEY,
             album_name TEXT,

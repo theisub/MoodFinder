@@ -9,6 +9,8 @@ services:
       - POSTGRES_DB=RYM
   app:
     build: ./app
+    environment:
+      - DB_HOST=db
     command: sh -c "python3 main.py && python3 manage.py runserver 0.0.0.0:8000"
     volumes:
       - .:/app

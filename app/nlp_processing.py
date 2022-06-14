@@ -7,13 +7,11 @@ from sklearn.metrics.pairwise import cosine_similarity
 from utils import get_records
 import re
 import numpy as np
-# import plotly.express as px
 import pandas as pd
 from sklearn.decomposition import PCA
 from sklearn.manifold import TSNE
 import time
 from django.conf import settings 
-import logging
 
 
 
@@ -24,16 +22,10 @@ def mean_pooling(model_output, attention_mask):
 
 
 def find_simillar(sentence):
-
-    logging.basicConfig(format='%(asctime)s %(message)s', level=logging.DEBUG)
-    logging.getLogger('find_sim').setLevel(logging.WARNING)
-
-    log = logging.getLogger()
-
     t1 = time.time()
     data_df = get_records()
     t2 = time.time()
-    log.info('records read with ',t2-t1)
+    print('records read with ',t2-t1)
 
 
     t1 = time.time()
@@ -41,30 +33,30 @@ def find_simillar(sentence):
     sentences.insert(0,sentence)
     # sentences =  np.insert(sentences,0,"I am walking through dark forest with thick vegetation,I messed up and end up in deep gooey swamp."
     t2 = time.time()
-    log.info('records cleaned and added new one with ',t2-t1)
+    print('records cleaned and added new one with ',t2-t1)
 
 
     t1 = time.time()
     tokenizer = settings.TOKENIZER
     t2 = time.time()
-    log.info('read tokenizer from pretrained with ',t2-t1)
+    print('read tokenizer from pretrained with ',t2-t1)
 
     t1 = time.time()
     model = settings.MODEL
 
     t2 = time.time()
-    log.info('read model from pretrained with ',t2-t1)
+    print('read model from pretrained with ',t2-t1)
 
     t1 = time.time()
     encoded_input = tokenizer(sentences, padding=True, truncation=True, return_tensors='pt')
     t2 = time.time()
-    log.info('input encoded with ',t2-t1)
+    print('input encoded with ',t2-t1)
 
     t1 = time.time()
     with torch.no_grad():
         model_output = model(**encoded_input)
     t2 = time.time()
-    log.info('gave output with ',t2-t1)
+    print('gave output with ',t2-t1)
 
 
     t1 = time.time()

@@ -13,7 +13,7 @@ from django.conf import settings
 
 from pathlib import Path
 from transformers import AutoTokenizer, AutoModel
-
+import os
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -86,7 +86,7 @@ DATABASES = {
         'NAME': 'RYM', 
         'USER': 'postgres', 
         'PASSWORD': 'ident',
-        'HOST': 'db', 
+        'HOST': os.environ.get("DB_HOST"), 
         'PORT': '5432',
     }
 }

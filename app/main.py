@@ -65,4 +65,5 @@ create_table()
     
 
 insert_dataframe(album_info_df)
+
 # def add_info():
