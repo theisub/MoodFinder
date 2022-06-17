@@ -13,7 +13,7 @@ from django.conf import settings
 
 from pathlib import Path
 from transformers import AutoTokenizer, AutoModel
-import os
+
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -86,7 +86,7 @@ DATABASES = {
         'NAME': 'RYM', 
         'USER': 'postgres', 
         'PASSWORD': 'ident',
-        'HOST': os.environ.get("DB_HOST"), 
+        'HOST': 'db', 
         'PORT': '5432',
     }
 }
@@ -111,10 +111,10 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # Model pre-load
-MODEL = AutoModel.from_pretrained('sentence-transformers/all-mpnet-base-v2')
+MODEL = AutoModel.from_pretrained('sentence-transformers/multi-qa-MiniLM-L6-cos-v1')
 
 # Tokenizer pre-load
-TOKENIZER = AutoTokenizer.from_pretrained('sentence-transformers/all-mpnet-base-v2')
+TOKENIZER = AutoTokenizer.from_pretrained('sentence-transformers/multi-qa-MiniLM-L6-cos-v1')
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
@@ -137,3 +137,6 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+import django_heroku
+django_heroku.settings(locals())

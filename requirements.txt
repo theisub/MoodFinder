@@ -1,0 +1,13 @@
+-f https://download.pytorch.org/whl/torch_stable.html
+beautifulsoup4
+requests
+pandas
+numpy
+sqlalchemy
+psycopg2
+torch==1.11.0+cpu 
+transformers
+scikit-learn
+Django
+gunicorn
+django_heroku
